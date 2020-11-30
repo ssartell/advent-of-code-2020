@@ -4,7 +4,7 @@
 		{
             "label": "run current day's tests",
             "type": "shell",
-            "command": "mocha ${fileDirname}/*test.js",
+            "command": "mocha '${fileDirname}/test.js'",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
