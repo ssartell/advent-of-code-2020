@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+            "label": "run current day's tests",
+            "type": "shell",
+            "command": "mocha ${fileDirname}/*test.js",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run all unit tests",
+            "type": "shell",
+			"command": "mocha ./day*/test.js",
+			"problemMatcher": [],
+        }
+	]
+}

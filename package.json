@@ -1,0 +1,28 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssartell/advent-of-code-2020.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssartell/advent-of-code-2020/issues"
+  },
+  "homepage": "https://github.com/ssartell/advent-of-code-2020#readme",
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "esm": "^3.2.25",
+    "mnemonist": "^0.38.0",
+    "mocha": "^8.2.1",
+    "node-stopwatch": "0.0.1",
+    "ramda": "^0.27.1"
+  }
+}
