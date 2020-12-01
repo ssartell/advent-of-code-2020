@@ -1,11 +1,11 @@
 import R from 'ramda';
 import { Heap } from 'mnemonist';
 
-export default const dijkstras = (start, isEnd, getNeighbors, getCost, getKey = x => x) => {
+export default (start, isEnd, getNeighbors, getCost, getKey = x => x) => {
     var notVisited = new Heap(R.comparator((a, b) => getCost(a) <= getCost(b)));
     notVisited.push(start);
     var seen = new Set();
-    while(notVisited.peek()) {
+    while(notVisited.peek() !== undefined) {
         var current = notVisited.pop();
         var key = getKey(current);
         if (seen.has(key)) continue;

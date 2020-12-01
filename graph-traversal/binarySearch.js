@@ -1,4 +1,4 @@
-export default const binarySearch = (low, high, comparatorToTarget, timeout = Infinity) => {
+export default (low, high, comparatorToTarget, timeout = Infinity) => {
     var i = 0;
     while (i !== timeout) {
         var middle = Math.floor((high + low) / 2);

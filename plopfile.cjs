@@ -23,8 +23,19 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '{{name}}/test.js',
-                templateFile: 'plop-templates/test.hbs'
+                path: '{{name}}/{{part}}.test.js',
+                templateFile: 'plop-templates/test.hbs',
+                data: {
+                    part: 'part1'
+                }
+            },
+            {
+                type: 'add',
+                path: '{{name}}/{{part}}.test.js',
+                templateFile: 'plop-templates/test.hbs',
+                data: {
+                    part: 'part2'
+                }
             }
         ]
     });

@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./day*/*.test.js",
+    "plop": "plop --plopfile ./plopfile.cjs"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "mnemonist": "^0.38.0",
     "mocha": "^8.2.1",
     "node-stopwatch": "0.0.1",
+    "plop": "^2.7.4",
     "ramda": "^0.27.1"
   }
 }

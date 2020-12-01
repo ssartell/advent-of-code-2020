@@ -1,11 +1,11 @@
 import R from 'ramda';
-import { Queue } from 'mnemonist';
+import Queue from 'mnemonist/queue.js';
 
-export default const bfs = (start, isEnd, getNeighbors, getKey = x => x) => {
+export default (start, isEnd, getNeighbors, getKey = x => x) => {
     var notVisited = new Queue();
     notVisited.enqueue(start);
     var seen = new Set();
-    while(notVisited.peek()) {
+    while(notVisited.peek() !== undefined) {
         var current = notVisited.dequeue();
         var key = getKey(current);
         if (seen.has(key)) continue;

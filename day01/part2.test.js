@@ -1,8 +1,8 @@
 import assert from 'assert';
-import {{part}} from './{{part}}.js';
+import part2 from './part2.js';
 
-describe('{{name}}', function() {
-    describe('{{part}}', function() {
+describe('day01', function() {
+    describe('part2', function() {
         // it('test', function() {
         //     assert.equal(part1("hello"), "hello");
         // });
