@@ -1,5 +1,7 @@
 import R from 'ramda';
 
+const debug = x => { debugger; return x; };
+
 const parseInput = R.pipe(R.trim, R.split('\n'), R.map(R.split('')));
 
 const step = (pos, width) => ({ x: (pos.x + 3) % width, y: pos.y + 1 });
