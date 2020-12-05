@@ -1,6 +1,6 @@
 import R from 'ramda';
 
-export const readLine = R.pipe(R.replace(/[FL]/g, '0'), R.replace(/[BR]/g, '1'), R.splitAt(7), R.map(x => parseInt(x, 2)), x => x[0] * 8 + x[1]);
+export const readLine = R.pipe(R.replace(/[FL]/g, '0'), R.replace(/[BR]/g, '1'), x => parseInt(x, 2));
 const parseInput = R.pipe(R.trim, R.split('\r\n'), R.map(readLine));
 
 const findSeatIndex = R.pipe(R.aperture(2), R.map(x => x[1] - x[0]), R.indexOf(2));
