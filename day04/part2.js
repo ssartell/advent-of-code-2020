@@ -1,5 +1,7 @@
 import R from 'ramda';
 
+const debug = x => { debugger; return x; };
+
 const readLine = R.pipe(R.trim, R.split(/\s+/), R.map(R.split(':')), R.fromPairs);
 const parseInput = R.pipe(R.trim, R.split('\r\n\r\n'), R.map(readLine));
 
