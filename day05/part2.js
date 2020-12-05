@@ -5,4 +5,4 @@ const parseInput = R.pipe(R.trim, R.split('\r\n'), R.map(readLine));
 
 const findSeatIndex = R.pipe(R.aperture(2), R.map(x => x[1] - x[0]), R.indexOf(2));
 
-export default R.pipe(parseInput, R.sortBy(R.identity), R.converge((seats, neighbor) => seats[neighbor] + 1, [R.identity, findSeatIndex]));
+export default R.pipe(parseInput, R.sortBy(R.identity), R.converge(R.nth, [findSeatIndex, R.identity]), R.add(1));
