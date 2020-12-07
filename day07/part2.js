@@ -7,9 +7,6 @@ const readContents = R.pipe(R.split(', '), R.map(readRule));
 const readLine = R.pipe(R.match(lineRegex), R.tail, R.zipObj(['color', 'contents']), R.evolve({'contents': x => x ? readContents(x) : [] }));
 const parseInput = R.pipe(R.split('\n'), R.map(readLine));
 
-const bagsIn = R.curry((color, bags) => {
-    let bag = bags.find(x => x.color === color);
-    return R.sum(R.map(x => x.count * (1 + bagsIn(x.color, bags)), bag.contents));
-})
+const bagsIn = R.curry((color, bags) => R.sum(bags.find(x => x.color === color).contents.map(x => x.count * (1 + bagsIn(x.color, bags)))));
 
 export default R.pipe(parseInput, bagsIn('shiny gold'));
