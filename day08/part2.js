@@ -3,8 +3,8 @@ import R from 'ramda';
 const readLine = R.pipe(R.split(' '), R.zipObj(['op', 'arg']), R.evolve({'arg': parseInt}));
 const parseInput = R.pipe(R.split('\n'), R.map(readLine));
 
-const compile = code => {
-    code = R.clone(code);
+const compile = source => {
+    let code = R.clone(source);
 
     let i = 0;
     let accumulator = 0;
@@ -32,10 +32,14 @@ const compile = code => {
     let terminated = () => i >= code.length;
 
     let run = () => {
+        i = 0;
+        accumulator = 0;
+
         while(!terminated() && !hasLooped()) {
             let line = code[i];
             ops[line.op](line);
         }
+        
         return {
             accumulator,
             terminated: terminated()
