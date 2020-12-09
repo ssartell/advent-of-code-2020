@@ -40,8 +40,15 @@ const compile = source => {
         return accumulator;
     };
 
+    let reset = () => {
+        code = R.clone(source);
+        i = 0;
+        accumulator = 0;
+    };
+
     return {
         run,
+        reset,
         terminated,
         hasLooped
     };
@@ -52,9 +59,11 @@ const findBorkedLine = code => {
         let op = line.op;
         if (op === 'acc') continue;
         line.op = line.op === 'nop' ? 'jmp' : 'nop';
+
         let program = compile(code);
         let result = program.run();
         if (program.terminated()) return result;
+        
         line.op = op;
     }
 }
