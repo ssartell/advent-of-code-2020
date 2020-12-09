@@ -32,22 +32,18 @@ const compile = source => {
     let terminated = () => i >= code.length;
 
     let run = () => {
-        i = 0;
-        accumulator = 0;
-
         while(!terminated() && !hasLooped()) {
             let line = code[i];
             ops[line.op](line);
         }
-        
-        return {
-            accumulator,
-            terminated: terminated()
-        };
+
+        return accumulator;
     };
 
     return {
-        run
+        run,
+        terminated,
+        hasLooped
     };
 };
 
@@ -58,7 +54,7 @@ const findBorkedLine = code => {
         line.op = line.op === 'nop' ? 'jmp' : 'nop';
         let program = compile(code);
         let result = program.run();
-        if (result.terminated) return result.accumulator;
+        if (program.terminated()) return result;
         line.op = op;
     }
 }

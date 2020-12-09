@@ -32,23 +32,19 @@ const compile = source => {
     let terminated = () => i >= code.length;
 
     let run = () => {
-        i = 0;
-        accumulator = 0;
-
         while(!terminated() && !hasLooped()) {
             let line = code[i];
             ops[line.op](line);
         }
-        
-        return {
-            accumulator,
-            terminated: terminated()
-        };
+
+        return accumulator;
     };
 
     return {
-        run
+        run,
+        terminated,
+        hasLooped
     };
 };
 
-export default R.pipe(parseInput, compile, prog => prog.run().accumulator);
+export default R.pipe(parseInput, compile, prog => prog.run());
