@@ -22,12 +22,10 @@ const compile = code => {
         }
     }
 
-    let linesExecuted = new Set();
+    let prevExecuted = new Set();
     let hasLooped = () => {
-        let line = code[i];
-        let key = `${i} ${line.op} ${line.arg}`;
-        if (linesExecuted.has(key)) return true;
-        linesExecuted.add(key);
+        if (prevExecuted.has(i)) return true;
+        prevExecuted.add(i);
         return false;
     }
 
