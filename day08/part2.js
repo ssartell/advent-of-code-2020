@@ -20,14 +20,14 @@ const compile = code => {
         'nop': (line) => {
             i++;
         }
-    }
+    };
 
     let prevExecuted = new Set();
     let hasLooped = () => {
         if (prevExecuted.has(i)) return true;
         prevExecuted.add(i);
         return false;
-    }
+    };
 
     let terminated = () => i >= code.length;
 
