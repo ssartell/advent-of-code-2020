@@ -34,12 +34,10 @@ const compile = code => {
     let run = () => {
         while(!terminated() && !hasLooped()) {
             let line = code[i];
-            if (!line) debugger;
             ops[line.op](line);
         }
         return {
             accumulator,
-            infiniteLoop: terminated() ? false : hasLooped(),
             terminated: terminated()
         };
     };
@@ -50,15 +48,14 @@ const compile = code => {
 };
 
 const findBorkedLine = code => {
-    for (let i = 0; i < code.length; i++) {
-        let line = code[i];
-        if (line.op === 'acc') continue;
-        let newLine = { op: line.op === 'nop' ? 'jmp' : 'nop', arg: line.arg };
-        code[i] = newLine;
+    for (const line of code) {
+        let op = line.op;
+        if (op === 'acc') continue;
+        line.op = line.op === 'nop' ? 'jmp' : 'nop';
         let program = compile(code);
         let result = program.run();
         if (result.terminated) return result.accumulator;
-        code[i] = line;
+        line.op = op;
     }
 }
 

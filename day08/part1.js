@@ -34,12 +34,10 @@ const compile = code => {
     let run = () => {
         while(!terminated() && !hasLooped()) {
             let line = code[i];
-            if (!line) debugger;
             ops[line.op](line);
         }
         return {
             accumulator,
-            infiniteLoop: terminated() ? false : hasLooped(),
             terminated: terminated()
         };
     };
