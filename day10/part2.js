@@ -7,7 +7,7 @@ const countCombos = R.memoizeWith(R.identity, R.curry((i, list) => {
     if (i === list.length - 1) return 1;
     
     let combos = 0;
-    for(var j = i + 1; j < R.min(i + 4, list.length); j++) {
+    for(var j = i + 1; j < i + 4 && j < list.length; j++) {
         if (list[i] + 3 >= list[j]) 
             combos += countCombos(j, list);
     }
