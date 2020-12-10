@@ -6,10 +6,9 @@ const parseInput = R.pipe(R.split('\n'), R.map(parseInt), x => x.concat([0, max(
 const countCombos = R.memoizeWith(R.identity, R.curry((i, list) => {
     if (i === list.length - 1) return 1;
     
-    let val = list[i];
     let combos = 0;
     for(var j = i + 1; j < R.min(i + 4, list.length); j++) {
-        if (val + 3 >= list[j])
+        if (list[i] + 3 >= list[j]) 
             combos += countCombos(j, list);
     }
     return combos;
