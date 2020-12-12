@@ -18,7 +18,7 @@ const ops = {
     F: ({x, y, dx, dy}, units) => ({x: x + units * dx, y: y + units * dy, dx, dy}),
 };
 
-const moveFerry = R.reduce((state, x) => ops[x.op](state, x.units), {x: 0, y: 0, dx: 10, dy: -1});
+const moveFerry = R.reduce((state, x) => ops[x.op](state, x.units));
 const manhattanDist = ({x, y}) => Math.abs(x) + Math.abs(y);
 
-export default R.pipe(parseInput, moveFerry, manhattanDist);
+export default R.pipe(parseInput, moveFerry({x: 0, y: 0, dx: 10, dy: -1}), manhattanDist);
