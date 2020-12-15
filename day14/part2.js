@@ -14,17 +14,17 @@ const applyMask = (mask, val) => {
             if (x === 'X') return 'X';
         })
         .join('');
-}
+};
 
 const write = (mem, addr, val) => {
     if (addr.indexOf('X') < 0) {
         mem[parseInt(addr, 2)] = val;
-        return
+        return;
     } else {
         write(mem, addr.replace('X', '0'), val);
         write(mem, addr.replace('X', '1'), val);
     }
-}
+};
 
 const ops = {
     'mask': (state, line) => {
@@ -34,7 +34,7 @@ const ops = {
         let addr = applyMask(state.mask, line.addr);
         write(state.mem, addr, line.val);
     }
-}
+};
 
 const run = prog => {
     let state = { mem: {} };
@@ -42,6 +42,6 @@ const run = prog => {
         ops[line.op](state, line);
     }
     return state;
-}
+};
 
 export default R.pipe(parseInput, run, R.prop('mem'), R.values, R.sum);
