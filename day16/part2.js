@@ -11,7 +11,10 @@ const readNearbyTickets = R.pipe(R.split('\n'), R.tail, R.map(readTicket));
 const parseInput = R.pipe(R.split('\n\n'), R.zipObj(['rules', 'myTicket', 'nearbyTickets']), R.evolve({rules: readRules, myTicket: readMyTicket, nearbyTickets: readNearbyTickets}));
 
 const isBetween = R.curry((a, b, x) => a <= x && x <= b);
-const isValid = R.curry((rule, value) => isBetween(rule.a, rule.b, value) || isBetween(rule.c, rule.d, value));
+const isValid = R.memoizeWith(
+    (rule, value) => `${rule.name} ${value}`,
+    R.curry((rule, value) => isBetween(rule.a, rule.b, value) || isBetween(rule.c, rule.d, value))
+);
 
 const anyRulesValid = R.curry((rules, value) => R.any(rule => isValid(rule, value), rules));
 const isTicketValid = R.curry((rules, ticket) => R.all(value => anyRulesValid(rules, value), ticket));
