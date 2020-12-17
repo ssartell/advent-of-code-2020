@@ -10,12 +10,10 @@ const getDimensions = input => [input.length - 1, input[0].length - 1, 0, 0];
 const toState = input => {
     let state = new Set();
     let [maxX, maxY] = getDimensions(input);
-    let z = 0;
-    let w = 0;
     for(let y = 0; y <= maxY; y++) {
         for(let x = 0; x <= maxX; x++) {
             if (input[y][x] === '#')
-                state.add(key([x,y,z,w]));
+                state.add(key([x,y,0,0]));
         }
     }
     return state;
@@ -53,8 +51,6 @@ const print = ([x1, y1, z1, w1], [x2, y2, z2, w2], state) => {
 const decAll = R.map(R.dec);
 const incAll = R.map(R.inc);
 const allEqual = R.pipe(R.zip, R.all(R.apply(R.equals)));
-const pairMin = R.pipe(R.zip, R.map(R.apply(R.min)));
-const pairMax = R.pipe(R.zip, R.map(R.apply(R.max)));
 
 const run = input => {
     let min = [0, 0, 0, 0];
@@ -66,8 +62,6 @@ const run = input => {
         let newState = new Set();
         min = decAll(min);
         max = incAll(max);
-        let newMin = min;
-        let newMax = max;
         for(let cell of getCube(min, max)) {
             let active = state.has(key(cell));
             let sum = 0;
@@ -78,13 +72,9 @@ const run = input => {
             }
             if ((active && (sum === 2 || sum === 3)) || (!active && sum === 3)) {
                 newState.add(key(cell));
-                newMin = pairMin(newMin, cell);
-                newMax = pairMax(cell, newMax);
             }
         }
         state = newState;
-        min = newMin;
-        max = newMax;
     }
     return state.size;
 }

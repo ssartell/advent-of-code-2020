@@ -10,11 +10,10 @@ const getDimensions = input => [input.length - 1, input[0].length - 1, 0];
 const toState = input => {
     let state = new Set();
     let [maxX, maxY] = getDimensions(input);
-    let z = 0;
     for(let y = 0; y <= maxY; y++) {
         for(let x = 0; x <= maxX; x++) {
             if (input[y][x] === '#')
-                state.add(key([x, y, z]));
+                state.add(key([x, y, 0]));
         }
     }
     return state;
