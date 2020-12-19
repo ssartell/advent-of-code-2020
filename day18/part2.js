@@ -31,12 +31,10 @@ const evaluate = exp => {
             }
             ops.pop();
             expEnd = true;
-        } else {
-            if (char === '+') {
-                ops.push(char);
-            } else if (char === '*') {
-                ops.push(char);
-            }
+        } else if (char === '+') {
+            ops.push(char);
+        } else if (char === '*') {
+            ops.push(char);
         }
 
         while (expEnd && ops.peek() === '+') {
