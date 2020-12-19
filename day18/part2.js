@@ -22,9 +22,7 @@ const evaluate = exp => {
         let expEnd = false;
         if (R.test(/\d/, char)) {
             vals.push(parseInt(char));
-            while (ops.peek() === '+') {
-                runOp();
-            }
+            expEnd = true;
         } else if (char === '(') {
             ops.push(char);
         } else if (char === ')') {
@@ -32,16 +30,18 @@ const evaluate = exp => {
                 runOp();
             }
             ops.pop();
-            while (ops.peek() === '+') {
-                runOp();
-            }
+            expEnd = true;
         } else {
             if (char === '+') {
                 ops.push(char);
             } else if (char === '*') {
                 ops.push(char);
             }
-        }       
+        }
+
+        while (expEnd && ops.peek() === '+') {
+            runOp();
+        }
     }
 
     while (ops.peek()) {
