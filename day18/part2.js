@@ -45,10 +45,6 @@ const evaluate = exp => {
     while (ops.peek()) {
         runOp();
     }
-
-    if (ops.size > 0 || vals.size !== 1) {
-        debugger;
-    }
     
     return vals.pop();
 }
