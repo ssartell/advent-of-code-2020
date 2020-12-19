@@ -26,7 +26,7 @@ const evaluate = exp => {
         } else if (char === '(') {
             ops.push(char);
         } else if (char === ')') {
-            while (ops.size > 0 && ops.peek() !== '(') {
+            while (ops.peek() !== '(') {
                 runOp();
             }
             ops.pop();
