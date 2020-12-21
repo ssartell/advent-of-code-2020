@@ -12,8 +12,6 @@ const parseMessages = R.pipe(R.split('\n'));
 const parseInput = R.pipe(R.split('\n\n'), R.zipObj(['rules', 'messages']), R.evolve({rules: parseRules, messages: parseMessages}));
 
 const match = (rules, id, message) => {
-    if (message === '') return [];
-    
     const rule = rules.get(id);
 
     if (rule.letter) {
