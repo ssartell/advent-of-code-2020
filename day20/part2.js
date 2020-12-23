@@ -125,6 +125,7 @@ const prepTiles = R.map(tile => {
 });
 
 const countChars = image => R.match(/#/g, image).length;
+const matchAll = (reg, str) => Array.from(str.matchAll(reg), x => x[1]);
 const seaMonster = fs.readFileSync('./day20/seaMonster.txt', 'utf8');
 const findSeaMonsters = finalImage => {
     let width = finalImage[0].length;
@@ -132,7 +133,6 @@ const findSeaMonsters = finalImage => {
 
     let seaMonsterWidth = seaMonster.indexOf('\n');
     let seaMonsterRegex = new RegExp(`(?=(${seaMonster.replace(/\n/g, `.{${width - seaMonsterWidth}}`).replace(/\s/g, '.')}))`, 'g');
-    let matchAll = (reg, str) => Array.from(str.matchAll(reg), x => x[1]);
 
     let image = '';
     let matches = [];
