@@ -131,24 +131,25 @@ const findSeaMonsters = finalImage => {
     let height = finalImage.length;
 
     let seaMonsterWidth = seaMonster.indexOf('\n');
-    let seaMonsterRegex = new RegExp(seaMonster.replace(/\n/g, `.{${width - seaMonsterWidth}}`).replace(/\s/g, '.'), 'g');
+    let seaMonsterRegex = new RegExp(`(?=(${seaMonster.replace(/\n/g, `.{${width - seaMonsterWidth}}`).replace(/\s/g, '.')}))`, 'g');
+    let matchAll = (reg, str) => Array.from(str.matchAll(reg), x => x[1]);
 
     let image = '';
     let matches = [];
     for(let i = 0; i < 4; i++) {
         image = finalImage.join('');
-        matches = R.match(seaMonsterRegex, image);
+        matches = matchAll(seaMonsterRegex, image);
         if (matches.length > 0) break;
         finalImage = flipRotateImage(finalImage);
         image = finalImage.join('');
-        matches = R.match(seaMonsterRegex, image);
+        matches = matchAll(seaMonsterRegex, image);
         if (matches.length > 0) break;
         finalImage = flipImage(finalImage);
     }
 
-    for(let i = 0; i < finalImage.length; i++) {
-        console.log(finalImage[i]);
-    }
+    // for(let i = 0; i < finalImage.length; i++) {
+    //     console.log(finalImage[i]);
+    // }
 
     return countChars(image) - matches.length * countChars(seaMonster);
 }
