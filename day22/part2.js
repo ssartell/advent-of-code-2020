@@ -41,4 +41,4 @@ const playGame = ([deck1, deck2]) => {
     return [deck1, deck2];
 }
 
-export default R.pipe(parseInput, playGame, debug, ([deck1, deck2]) => deck1.length > 0 ? deck1 : deck2, R.reverse, R.addIndex(R.map)((x, i) => x * (i + 1)), R.sum);
+export default R.pipe(parseInput, playGame, ([deck1, deck2]) => deck1.length > 0 ? deck1 : deck2, R.reverse, R.addIndex(R.map)((x, i) => x * (i + 1)), R.sum);
