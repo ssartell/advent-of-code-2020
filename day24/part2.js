@@ -13,33 +13,47 @@ const dirs = {
     'w':  [-1, 1, 0]
 }
 
-const tileKey = ([x, y, z]) => `${x},${y},${z}`;
-const add = (a, b) => R.zipWith(R.add, a, b);
+const toKey = ([x, y, z]) => `${x},${y},${z}`;
+const fromKey = R.pipe(R.split(','), R.map(parseInt));
+const add = R.curry((a, b) => R.zipWith(R.add, a, b));
 const flipTile = (tiles, input) => {
     let pos = [0, 0, 0];
-    for(let i = 0; i < input.length; i++) {
+    for(let i = 0; i < input.length;) {
         let dir = input.substr(i, 2);
-        if (!R.has(dir, dirs)) {
-            dir = input.substr(i, 1);
-        }
-
+        dir = R.has(dir, dirs) ? dir : input.substr(i, 1);
         pos = add(pos, dirs[dir]);
         i += dir.length;
     }
 
-    let key = tileKey(x, y, z);
-    if (tiles.has(tileKey)) {
-        let color = (tiles.get(tileKey) + 1) % 2;
-        tiles.set(tileKey, color);
+    let key = toKey(pos);
+    if (tiles.has(key)) {
+        tiles.delete(key);
     } else {
-        tiles.set(tileKey, 1);
+        tiles.add(key);
     }
 
     return tiles;
 };
 
-const run = tiles => {
+const getNeighbors = pos => R.map(add(pos), R.values(dirs));
 
-}
+const runDay = blackTiles => {
+    let next = new Set();
+    let whiteTiles = [];
+    for(let tileKey of blackTiles) {
+        let pos = fromKey(tileKey);
+        let neighbors = getNeighbors(pos);
+        let black = neighbors.filter(x => blackTiles.has(toKey(x))).length;
+        whiteTiles = whiteTiles.concat(neighbors.filter(x => !blackTiles.has(toKey(x))));
+        if (0 < black && black <= 2) next.add(tileKey);
+    }
+    for(let pos of whiteTiles) {
+        let neighbors = getNeighbors(pos);
+        let black = neighbors.filter(x => blackTiles.has(toKey(x))).length;
+        if (black === 2) next.add(toKey(pos));
+    }
 
-export default R.pipe(parseInput, R.reduce(flipTile, new Map()), run);
+    return next;
+};
+
+export default R.pipe(parseInput, R.reduce(flipTile, new Set()), R.reduce(runDay, R.__, R.range(0, 100)), x => x.size);
