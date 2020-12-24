@@ -39,17 +39,32 @@ const getNeighbors = pos => R.map(add(pos), R.values(dirs));
 
 const runDay = blackTiles => {
     let next = new Set();
-    let whiteTiles = [];
+    let whiteTiles = new Set();
     for(let tileKey of blackTiles) {
         let pos = fromKey(tileKey);
         let neighbors = getNeighbors(pos);
-        let black = neighbors.filter(x => blackTiles.has(toKey(x))).length;
-        whiteTiles = whiteTiles.concat(neighbors.filter(x => !blackTiles.has(toKey(x))));
+
+        let black = 0;
+        for(let neighbor of neighbors) {
+            if (blackTiles.has(toKey(neighbor))) {
+                black++;
+            } else {
+                whiteTiles.add(toKey(neighbor));
+            }
+        }
         if (0 < black && black <= 2) next.add(tileKey);
     }
-    for(let pos of whiteTiles) {
+
+    for(let tileKey of whiteTiles) {
+        let pos = fromKey(tileKey);
         let neighbors = getNeighbors(pos);
-        let black = neighbors.filter(x => blackTiles.has(toKey(x))).length;
+        
+        let black = 0;
+        for(let neighbor of neighbors) {
+            if (blackTiles.has(toKey(neighbor)))
+                black++;
+            if (black > 2) break;
+        }
         if (black === 2) next.add(toKey(pos));
     }
 
